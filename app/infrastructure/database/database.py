@@ -1,3 +1,5 @@
+import urllib.parse
+
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -6,8 +8,10 @@ from app.infrastructure.config import get_settings
 
 settings = get_settings()
 
+password = urllib.parse.quote_plus(settings.MYSQL_PASSWORD)
+
 DATABASE_URL = (
-    f"mysql+aiomysql://{settings.MYSQL_USER}:{settings.MYSQL_PASSWORD}"
+    f"mysql+aiomysql://{settings.MYSQL_USER}:{password}"
     f"@{settings.MYSQL_HOST}:{settings.MYSQL_PORT}/{settings.MYSQL_DATABASE}"
 )
 

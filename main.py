@@ -1,11 +1,23 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from app.domains.post.adapter.inbound.api.post_router import router as post_router
+from app.domains.post.infrastructure.orm.post_orm import Base
 from app.infrastructure.config import get_settings
+from app.infrastructure.database.database import engine
 
 settings = get_settings()
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.include_router(post_router)
 

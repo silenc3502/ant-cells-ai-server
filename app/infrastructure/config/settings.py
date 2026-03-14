@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     MYSQL_HOST: str
     MYSQL_PORT: int
     MYSQL_DATABASE: str
+    JWT_SECRET_KEY: str
 
     model_config = {
         "env_file": ".env",
