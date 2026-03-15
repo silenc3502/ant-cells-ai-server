@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     MYSQL_PORT: int
     MYSQL_DATABASE: str
     JWT_SECRET_KEY: str
+    SERP_API_KEY: str
 
     model_config = {
         "env_file": ".env",

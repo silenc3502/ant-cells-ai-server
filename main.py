@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.domains.news.adapter.inbound.api.news_router import router as news_router
 from app.domains.post.adapter.inbound.api.post_router import router as post_router
 from app.domains.post.infrastructure.orm.post_orm import Base
 from app.infrastructure.config import get_settings
@@ -20,6 +21,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(post_router)
+app.include_router(news_router)
 
 
 @app.get("/")
